@@ -9,10 +9,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/jorgenschaefer/smtpproxy/argerror"
-	"github.com/jorgenschaefer/smtpproxy/config"
-	"github.com/jorgenschaefer/smtpproxy/dnsbl"
-	"github.com/jorgenschaefer/smtpproxy/smtpd"
+	"github.com/rmoore4146/smtpproxy/argerror"
+	"github.com/rmoore4146/smtpproxy/config"
+	"github.com/rmoore4146/smtpproxy/dnsbl"
+	"github.com/rmoore4146/smtpproxy/smtpd"
 )
 
 type State struct {
@@ -29,7 +29,7 @@ func Greet(conn smtpd.Connection) (*State, error) {
 		args:      map[string]string{},
 		blacklist: dnsbl.New(config.DNSBL(), net.LookupHost),
 	}
-	s.args["client"] = s.conn.RemoteAddr().String()
+	s.args["client"] = hostname()
 	if err := conn.Printf("220-%s here, please hold.\r\n", hostname()); err != nil {
 		s.args["error"] = err.Error()
 		return nil, s.Error("Error writing server greeting")
