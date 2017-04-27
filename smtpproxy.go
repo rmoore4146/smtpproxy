@@ -69,7 +69,7 @@ func maybeTarpit(err error, conn smtpd.Connection) {
 		args := map[string]string{
 			"client": config.AdvertisedAddress(),
 		}
-		bytesread, duration, err := conn.Tarpit1()
+		bytesread, duration, err := conn.Tarpit()
 		args["bytesread"] = fmt.Sprintf("%d", bytesread)
 		args["duration"] = duration.String()
 		args["error"] = err.Error()
