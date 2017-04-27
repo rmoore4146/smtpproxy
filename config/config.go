@@ -16,6 +16,10 @@ func Check() {
 		fmt.Fprintf(os.Stderr, "No RELAY_HOST given\n")
 		os.Exit(1)
 	}
+	if AdvertisedAddress() == "" {
+		fmt.Fprintf(os.Stderr, "No ADVERTISED_ADDRESS given\n")
+		os.Exit(1)
+	}
 
 	rx, err := regexp.Compile(os.Getenv("VALID_RECIPIENTS"))
 	if err != nil {
@@ -71,6 +75,10 @@ func OverrideRecipient() (string, bool) {
 
 func RelayHost() string {
 	return os.Getenv("RELAY_HOST")
+}
+
+func AdvertisedAddress() string {
+	return os.Getenv("ADVERTISED_ADDRESS")
 }
 
 func ListenMode() string {

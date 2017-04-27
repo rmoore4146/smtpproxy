@@ -45,9 +45,9 @@ func listen() (net.Listener, error) {
 func handleConnection(conn smtpd.Connection) {
 	defer conn.Close()
 	fmt.Println(argerror.New("New connection",
-		map[string]string{"client": hostname()}))
+		map[string]string{"client": config.AdvertisedAddress()}))
 	defer fmt.Println(argerror.New("Connection finished",
-		map[string]string{"client": hostname()}))
+		map[string]string{"client": config.AdvertisedAddress()}))
 	state, err := proxy.Greet(conn)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -67,20 +67,12 @@ func maybeTarpit(err error, conn smtpd.Connection) {
 	_, ok := err.(proxy.TarpitError)
 	if ok {
 		args := map[string]string{
-			"client": hostname(),
+			"client": config.AdvertisedAddress(),
 		}
-		bytesread, duration, err := conn.Tarpit()
+		bytesread, duration, err := conn.Tarpit1()
 		args["bytesread"] = fmt.Sprintf("%d", bytesread)
 		args["duration"] = duration.String()
 		args["error"] = err.Error()
 		fmt.Println(argerror.New("Client escaped tarpit", args))
 	}
-}
-
-func hostname() string {
-	name, err := os.Hostname()
-	if err != nil {
-		panic(err)
-	}
-	return name
 }

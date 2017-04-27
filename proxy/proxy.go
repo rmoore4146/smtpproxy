@@ -29,7 +29,7 @@ func Greet(conn smtpd.Connection) (*State, error) {
 		args:      map[string]string{},
 		blacklist: dnsbl.New(config.DNSBL(), net.LookupHost),
 	}
-	s.args["client"] = hostname()
+	s.args["client"] = config.AdvertisedAddress()
 	if err := conn.Printf("220-%s here, please hold.\r\n", hostname()); err != nil {
 		s.args["error"] = err.Error()
 		return nil, s.Error("Error writing server greeting")
