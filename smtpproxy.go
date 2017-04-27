@@ -5,10 +5,10 @@ import (
 	"net"
 	"os"
 
-	"github.com/jorgenschaefer/smtpproxy/argerror"
-	"github.com/jorgenschaefer/smtpproxy/config"
-	"github.com/jorgenschaefer/smtpproxy/proxy"
-	"github.com/jorgenschaefer/smtpproxy/smtpd"
+	"github.com/rmoore4146/smtpproxy/argerror"
+	"github.com/rmoore4146/smtpproxy/config"
+	"github.com/rmoore4146/smtpproxy/proxy"
+	"github.com/rmoore4146/smtpproxy/smtpd"
 )
 
 func main() {
